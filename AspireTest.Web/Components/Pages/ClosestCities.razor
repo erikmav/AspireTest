@@ -1,0 +1,45 @@
+﻿@page "/closestCities"
+@attribute [StreamRendering(true)]
+@attribute [OutputCache(Duration = 5)]
+
+@inject WeatherApiClient WeatherApi
+
+<PageTitle>Closest Cities</PageTitle>
+
+<h1>Closest Cities</h1>
+
+<p>This component demonstrates showing data loaded from a backend API service.</p>
+
+@if (citySimilarities is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>City Name</th>
+                <th>Similarity Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var citySimilarity in citySimilarities)
+            {
+                <tr>
+                    <td>@citySimilarity.City</td>
+                    <td>@citySimilarity.Score</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<CityDotProductSimilarity>? citySimilarities;
+
+    protected override async Task OnInitializedAsync()
+    {
+        citySimilarities = await WeatherApi.GetCitySimilaritiesAsync();
+    }
+}

@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+
+    <!--When building from command line with 'msbuild' command the Configuration property may be null.
+        Setting the default to compute the right output directory. -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <!--Using embedded pdb mode to improve diagnosing and debugging experience-->
+    <DebugType>embedded</DebugType>
+
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+
+  </PropertyGroup>
+
+  <PropertyGroup Label="Default RIDs">
+    <RuntimeIdentifier Condition=" '$(RuntimeIdentifier)'=='' AND '$(OS)' == 'Windows_NT' ">win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition=" '$(RuntimeIdentifier)'=='' AND '$(OS)' != 'Windows_NT' ">linux-x64</RuntimeIdentifier>
+    <TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+  </PropertyGroup>
+
+</Project>
